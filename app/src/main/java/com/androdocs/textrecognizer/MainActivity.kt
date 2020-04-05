@@ -58,10 +58,14 @@ class MainActivity : AppCompatActivity() {
                 //if speaking then stop
                 mTTS.stop()
                 //mTTS.shutdown()
+
             }
             else{
                 //if not speaking
                 Toast.makeText(this, "Not speaking", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity,Meaning::class.java)
+                intent.putExtra("RECTEXT",editText.text.toString())
+                startActivity(intent)
             }
         }
 
