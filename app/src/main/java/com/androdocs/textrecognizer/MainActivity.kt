@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -12,18 +13,59 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
+import kotlinx.android.synthetic.main.activity_tts.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var imageView: ImageView
     lateinit var editText: EditText
+    //Text To Speech
+    lateinit var mTTS: TextToSpeech
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         imageView = findViewById(R.id.imageView)
         editText = findViewById(R.id.editText)
+
+        mTTS = TextToSpeech(applicationContext, TextToSpeech.OnInitListener { status ->
+            if (status != TextToSpeech.ERROR){
+                //if there is no error then set language
+                mTTS.language = Locale.UK
+            }
+        })
+
+        //speak button click
+        speakBtn.setOnClickListener {
+            //get text from edit text
+            val toSpeak = editText.text.toString()
+            if (toSpeak == ""){
+                //if there is no text in edit text
+                Toast.makeText(this, "Enter text", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                //if there is text in edit text
+                Toast.makeText(this, toSpeak, Toast.LENGTH_SHORT).show()
+                mTTS.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null)
+            }
+        }
+
+        //stop speaking button click
+        stopBtn.setOnClickListener {
+            if (mTTS.isSpeaking){
+                //if speaking then stop
+                mTTS.stop()
+                //mTTS.shutdown()
+            }
+            else{
+                //if not speaking
+                Toast.makeText(this, "Not speaking", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
     }
 
 

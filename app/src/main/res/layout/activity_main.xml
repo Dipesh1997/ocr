@@ -29,19 +29,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recognize Text"
-                android:onClick="startRecognizing"/>
+                android:onClick="startRecognizing"
+            />
     </LinearLayout>
 
 
     <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:layout_below="@+id/actionContainer"
             android:background="@android:color/transparent"
             android:gravity="top"
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:hint="Detected text will appear here."/>
+
+    <!--Button: click to speak the text of EditText-->
+    <Button
+        android:id="@+id/speakBtn"
+        android:layout_below="@id/editText"
+        android:drawablePadding="5dp"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:text="Speak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <!--Button: click to stop speaking text of EditText-->
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_below="@id/editText"
+        android:drawablePadding="5dp"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:text="Stop"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        />
 
 </RelativeLayout>
