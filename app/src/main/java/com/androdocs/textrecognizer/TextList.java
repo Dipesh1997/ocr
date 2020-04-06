@@ -15,7 +15,7 @@ public class TextList extends AppCompatActivity {
         setContentView(R.layout.activity_textview);
 
         lv=(ListView) findViewById(R.id.listView);
-        lv.setAdapter(new CustomAdapter(this, prgmNameList));
+        //lv.setAdapter(new CustomAdapter(this, prgmNameList));
 
     }
 

@@ -17,7 +17,8 @@ public class CustomAdapter extends BaseAdapter {
     String [] result;
     Context context;
     private static LayoutInflater inflater=null;
-    public CustomAdapter(TextList activity, String[] prgmNameList) {
+    //public CustomAdapter(TextList activity, String[] prgmNameList) {
+    public CustomAdapter(Meaning activity, String[] prgmNameList) {
 
         result = prgmNameList;
         context = activity;
