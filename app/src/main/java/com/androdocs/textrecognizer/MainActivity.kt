@@ -119,7 +119,8 @@ class MainActivity : AppCompatActivity() {
         }
         for (block in resultText.textBlocks) {
             val blockText = block.text
-            editText.append(blockText + "\n")
+            editText.append(blockText + " ")
+            //editText.append(blockText + "\n")
         }
     }
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,8 @@ public class CustomAdapter extends BaseAdapter {
     String [] result;
     Context context;
     private static LayoutInflater inflater=null;
+    String url;
+    String textpass;
     //public CustomAdapter(TextList activity, String[] prgmNameList) {
     public CustomAdapter(Meaning activity, String[] prgmNameList) {
 
@@ -42,14 +45,16 @@ public class CustomAdapter extends BaseAdapter {
     public class Holder
     {
         TextView tv;
+        TextView selectedWord;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        Holder holder=new Holder();
+        final Holder holder=new Holder();
         View rowView = inflater.inflate(R.layout.list_item, null);
         holder.tv=(TextView) rowView.findViewById(R.id.textView1);
+        holder.selectedWord=(TextView) rowView.findViewById(R.id.selctedWord);
         // holder.tv.setText(result[position]);
 
         String span[] = result[position].split(" ") ;
@@ -65,8 +70,12 @@ public class CustomAdapter extends BaseAdapter {
 
                     TextView v = (TextView)textView ;
                     String text = v.getText().toString() ;
+                    textpass=text;
 
                     Log.d("View" , text);
+                    DictionaryRequest2 dictionaryRequest = new DictionaryRequest2(context,holder.tv);
+                    url = dictionaryEntries();
+                    dictionaryRequest.execute(url);
                     Toast.makeText(context,text,Toast.LENGTH_SHORT).show();
                 }
             };
@@ -91,12 +100,21 @@ public class CustomAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        holder.tv.setText(ss);
-        holder.tv.setMovementMethod(LinkMovementMethod.getInstance());
+        holder.selectedWord.setText(ss);
+        holder.selectedWord.setMovementMethod(LinkMovementMethod.getInstance());
 
         Log.d("SpannableString" , ss.toString());
 
         return rowView;
+    }
+
+    private String dictionaryEntries() {
+        final String language = "en-gb";
+        final String word = textpass;
+        final String fields = "definitions";
+        final String strictMatch = "false";
+        final String word_id = word.toLowerCase();
+        return "https://od-api.oxforddictionaries.com:443/api/v2/entries/" + language + "/" + word_id + "?" + "fields=" + fields + "&strictMatch=" + strictMatch;
     }
 
 }
