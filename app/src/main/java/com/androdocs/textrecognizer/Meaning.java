@@ -29,7 +29,7 @@ public class Meaning extends AppCompatActivity {
         String[] list =value.split(" ");
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter<CharSequence>(this,android.R.layout.simple_list_item_1,list);
 
-        lvOG=(ListView) findViewById(R.id.listViewOriginal);
+        lvOG= findViewById(R.id.listViewOriginal);
         lvOG.setAdapter(new CustomAdapter(this, list));
 
 

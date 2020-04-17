@@ -35,8 +35,8 @@ public class Dictionary extends AppCompatActivity {
     }
 
     public void SendRequestOnClick(View v){
-        DictionaryRequest dictionaryRequest = new DictionaryRequest(this, showDef);
-        url = dictionaryEntries();
-        dictionaryRequest.execute(url);
+//        DictionaryRequest dictionaryRequest = new DictionaryRequest(this, showDef);
+//        url = dictionaryEntries();
+//        dictionaryRequest.execute(url);
     }
 }

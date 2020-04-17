@@ -8,8 +8,8 @@ import javax.net.ssl.HttpsURLConnection;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,10 +19,16 @@ public class DictionaryRequest extends AsyncTask<String, Integer, String> {
 
     Context context;
     TextView showDef;
+    View.OnClickListener onClickListener;
 
     DictionaryRequest(Context context, TextView textView){
         this.context = context;
-        showDef = textView;
+        this.showDef = textView;
+    }
+
+    public DictionaryRequest(View.OnClickListener onClickListener, TextView plotTextView) {
+        this.onClickListener = onClickListener;
+        this.showDef=plotTextView;
     }
 
     @Override

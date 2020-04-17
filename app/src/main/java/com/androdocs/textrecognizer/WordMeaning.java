@@ -1,6 +1,6 @@
 package com.androdocs.textrecognizer;
 
-public class Movie {
+public class WordMeaning {
 
     private String title;
     private String rating;
@@ -8,7 +8,7 @@ public class Movie {
     private String plot;
     private boolean expanded;
 
-    public Movie(String title, String rating, String year, String plot) {
+    public WordMeaning(String title, String rating, String year, String plot) {
         this.title = title;
         this.rating = rating;
         this.year = year;
@@ -58,7 +58,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
+        return "WordMeaning{" +
                 "title='" + title + '\'' +
                 ", rating='" + rating + '\'' +
                 ", year='" + year + '\'' +

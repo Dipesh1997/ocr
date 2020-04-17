@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity() {
             else{
                 //if not speaking
                 Toast.makeText(this, "Not speaking", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@MainActivity,Meaning::class.java)
+                /*val intent = Intent(this@MainActivity,Meaning::class.java)*/
+                val intent = Intent(this@MainActivity,Expand::class.java)
                 intent.putExtra("RECTEXT",editText.text.toString())
                 startActivity(intent)
             }
@@ -122,5 +123,6 @@ class MainActivity : AppCompatActivity() {
             editText.append(blockText + " ")
             //editText.append(blockText + "\n")
         }
+
     }
 }
