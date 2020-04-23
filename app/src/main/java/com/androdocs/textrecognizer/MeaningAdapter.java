@@ -10,6 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+
 import java.util.List;
 
 public class MeaningAdapter extends RecyclerView.Adapter<MeaningAdapter.WordMeaningVH> {
@@ -51,6 +58,7 @@ public class MeaningAdapter extends RecyclerView.Adapter<MeaningAdapter.WordMean
         ConstraintLayout expandableLayout;
         TextView titleTextView, yearTextView, ratingTextView, plotTextView;
         String url;
+        private String sourceText;
 
         public WordMeaningVH(@NonNull final View itemView) {
             super(itemView);
@@ -92,6 +100,7 @@ public class MeaningAdapter extends RecyclerView.Adapter<MeaningAdapter.WordMean
                     DictionaryRequest dictionaryRequest = new DictionaryRequest(itemView.getContext(), plotTextView);
                     url = dictionaryEntries();
                     dictionaryRequest.execute(url);
+                    translate();
                 }
 
                 private String dictionaryEntries() {
@@ -103,6 +112,30 @@ public class MeaningAdapter extends RecyclerView.Adapter<MeaningAdapter.WordMean
                     final String word_id = noSpaceStr.toLowerCase();
                     return "https://od-api.oxforddictionaries.com:443/api/v2/entries/" + language + "/" + word_id + "?" + "fields=" + fields + "&strictMatch=" + strictMatch;
                 }
+                private void translate() {
+                    sourceText = titleTextView.getText().toString();
+                    FirebaseTranslatorOptions options = new FirebaseTranslatorOptions.Builder()
+                            //from language
+                            .setSourceLanguage(FirebaseTranslateLanguage.EN)
+                            // to language
+                            .setTargetLanguage(FirebaseTranslateLanguage.HI)
+                            .build();
+
+                    final FirebaseTranslator translator = FirebaseNaturalLanguage.getInstance().getTranslator(options);
+                    FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder().build();
+                    translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            translator.translate(sourceText).addOnSuccessListener(new OnSuccessListener<String>() {
+                                @Override
+                                public void onSuccess(String s) {
+                                    yearTextView.setText(s);
+                                }
+                            });
+                        }
+                    });
+                }
+
 
             });
 
